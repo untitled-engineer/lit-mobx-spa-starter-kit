@@ -1,12 +1,12 @@
-import { html, fixture, expect } from '@open-wc/testing';
+import { html } from 'lit';
+import { fixture, expect } from '@open-wc/testing';
 
-import { RealmApp } from '../src/RealmApp.js';
-import '../src/realm-app.js';
+import { XApp } from '../src/x-app.js';
 
 describe('RealmApp', () => {
-  let element: RealmApp;
+  let element: XApp;
   beforeEach(async () => {
-    element = await fixture(html`<realm-app></realm-app>`);
+    element = await fixture(html`<x-app></x-app>`);
   });
 
   it('renders a h1', () => {

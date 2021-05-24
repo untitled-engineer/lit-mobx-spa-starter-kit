@@ -1,5 +1,5 @@
-import { html, TemplateResult } from 'lit-html';
-import '../src/realm-app.js';
+import { html, TemplateResult } from 'lit';
+import '../src/x-app.js';
 
 export default {
   title: 'RealmApp',
