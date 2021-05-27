@@ -1,3 +1,5 @@
+// import "eagrouter";
+import "./router/index.js";
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -12,9 +14,50 @@ import '@polymer/app-layout/demo/sample-content.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/iron-icons/iron-icons.js';
 
+import "./home-page-element.js";
+import type { Route } from "./router/index.js";
+
 @customElement("x-app")
 export class XApp extends LitElement {
   @property({ type: String }) title = 'My app';
+
+  routes: Route[]  = [
+    { // For pages without lazy loading, use like this
+      path: "/",
+      // redirect: "/home",
+      component: "<home-page-element></home-page-element>",
+    },
+
+    { // For pages with lazy loading, use like this
+      component: "<todo-page-element></todo-page-element>",
+      path: "/todo",
+      bundle: () => import("./todo/todo-page-element.js"),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      guard: () => new Promise((resolve, _) => {
+        // eslint-disable-next-line no-console
+          console.log(this,false);
+          // @TODO: Application permission
+          resolve(true);
+        })
+    },
+
+    /*
+
+    {
+      component: "<todo-page></todo-page>",
+      // Matches all products path because of * symbol
+      path: "/todo/*",// Use * to match multiple paths
+      bundle: () => import("./pages/products"),
+    },
+
+     */
+
+    {
+      path: "*", // use * for pages with routes that don't match.
+      component: "<page-not-found></page-not-found>",
+      bundle: () => import("./page-not-found.js"),
+    },
+  ];
 
   static styles = css`
     :host {
@@ -59,6 +102,7 @@ export class XApp extends LitElement {
     }
   `;
 
+
   render() {
     return html`
       <main>
@@ -67,6 +111,7 @@ export class XApp extends LitElement {
 
           <app-drawer slot="drawer">
             <app-toolbar>Getting Started</app-toolbar>
+            <a href="/todo"><button>todo</button></a>
           </app-drawer>
 
           <app-header-layout>
@@ -78,7 +123,9 @@ export class XApp extends LitElement {
               </app-toolbar>
             </app-header>
 
-            <sample-content size="100"></sample-content>
+            <eag-router .routes=${this.routes}></eag-router>
+
+            <!--<sample-content size="100"></sample-content>-->
 
           </app-header-layout>
         </app-drawer-layout>
@@ -86,3 +133,5 @@ export class XApp extends LitElement {
     `;
   }
 }
+
+// todo https://www.webcomponents.org/element/@polymer/app-storage

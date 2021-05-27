@@ -1,4 +1,16 @@
 {
+  "name": "realm-app",
+  "version": "0.0.0",
+  "description": "Web-component realm-app following open-wc recommendations",
+  "author": "realm-app",
+  "license": "MIT",
+  "keywords": [
+    "web-components",
+    "lit-element",
+    "typescript",
+    "lit"
+  ],
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.3",
@@ -11,6 +23,7 @@
     "@web/dev-server": "^0.1.17",
     "@web/dev-server-storybook": "^0.3.5",
     "@web/test-runner": "^0.13.4",
+    "@types/page": "^1.11.2",
     "concurrently": "^6.2.0",
     "deepmerge": "^4.2.2",
     "eslint": "^7.27.0",
@@ -41,18 +54,17 @@
     "start:build": "npm run build && web-dev-server --root-dir dist --app-index index.html --open --compatibility none",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\""
   },
-  "name": "realm-app",
-  "version": "0.0.0",
-  "description": "Web-component realm-app following open-wc recommendations",
-  "author": "realm-app",
-  "license": "MIT",
   "dependencies": {
-    "@adobe/lit-mobx": "^2.0.0-rc.4",
+    "@adobe/lit-mobx": "git+ssh://git@github.com:untitled-engineer/lit-mobx.git",
     "@polymer/app-layout": "^3.1.0",
+    "@polymer/app-storage": "^3.0.3",
     "@polymer/iron-icons": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "lit": "^2.0.0-rc.2",
-    "mobx": "^6.3.2"
+    "lit-element": "^3.0.0-rc.2",
+    "mobx": "^6.3.2",
+    "page": "^1.11.6",
+    "rxjs": "^7.1.0"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
