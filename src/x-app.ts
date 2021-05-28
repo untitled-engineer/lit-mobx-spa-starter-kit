@@ -1,6 +1,6 @@
 // import "eagrouter";
 import "./router/index.js";
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
@@ -16,9 +16,10 @@ import '@polymer/iron-icons/iron-icons.js';
 
 import "./home-page-element.js";
 import type { Route } from "./router/index.js";
+import {MobxLitElement} from "@adobe/lit-mobx/src/lit-mobx";
 
 @customElement("x-app")
-export class XApp extends LitElement {
+export class XApp extends MobxLitElement {
   @property({ type: String }) title = 'My app';
 
   routes: Route[]  = [

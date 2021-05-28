@@ -1,4 +1,5 @@
-import {html, LitElement} from "lit";
+import {MobxLitElement} from "@adobe/lit-mobx/src/lit-mobx";
+import {html} from "lit";
 import {customElement} from "lit/decorators.js";
 
 import TodoService from "./todo-service.js";
@@ -6,13 +7,18 @@ import TodoService from "./todo-service.js";
 import "./add-item.js";
 import "./list-items.js";
 
+import {TodoPageStore} from "./todo-page-store.js";
+
+import {Todo} from "./todo.js";
 
 @customElement('todo-page-element')
-export class TodoPageElement extends LitElement {
+export class TodoPageElement extends MobxLitElement {
+
+  private todoPageState: TodoPageStore;
 
   private todoService: TodoService;
 
-  private todoList: any;
+  private todoList: Array<Todo>;
 
   static get properties() {
     return {
@@ -23,15 +29,24 @@ export class TodoPageElement extends LitElement {
   constructor() {
     super();
     this.todoService = new TodoService();
+    this.todoPageState = new TodoPageStore();
     this.todoList = this.todoService.getTodoList();
   }
 
   protected render() {
     return html`
       <h1>my today\`s todo list</h1>
+      Count is ${this.todoPageState.count}
+      <br />
+      <button @click=${this.incrementCount}>Add</button>
       <add-item></add-item>
       <list-items .todo-list="${this.todoList}"></list-items>
     `
+  }
+
+
+  private incrementCount() {
+    this.todoPageState.increment();
   }
 
   connectedCallback() {

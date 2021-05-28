@@ -33,7 +33,7 @@ class TodoService {
     this.todoList = this.todoList.map((item: Todo) => {
       if (item.id === id) {
         // eslint-disable-next-line no-param-reassign
-        item.done = !item.done;
+        item.isComplete = !item.isComplete;
       }
 
       return item;
