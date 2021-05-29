@@ -1,17 +1,13 @@
-import {LitElement, html} from "lit";
-import {customElement} from "lit/decorators.js";
+import {MobxLitElement} from "@adobe/lit-mobx";
+import { html} from "lit";
+import {customElement, property} from "lit/decorators.js";
 
 
 @customElement('add-item')
-export class AddItem extends LitElement {
+export class AddItem extends MobxLitElement {
 
+  @property({type: String})
   private todoItem: string;
-
-  static get properties() {
-    return {
-      todoItem: {type: String},
-    };
-  }
 
   constructor() {
     // Always call super() first

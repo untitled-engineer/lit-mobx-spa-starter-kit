@@ -1,6 +1,8 @@
-import {LitElement, html} from "lit";
+import {MobxLitElement} from "@adobe/lit-mobx";
+import {html} from "lit";
 import {customElement, property} from "lit/decorators.js";
 import {Todo} from "./todo.js";
+import {TodoStore} from "./todo-store.js";
 
 import '@polymer/paper-material/paper-material.js';
 import '@polymer/paper-checkbox/paper-checkbox.js';
@@ -8,20 +10,20 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 
 @customElement('todo-item')
-export class TodoItem extends LitElement {
+export class TodoItem extends MobxLitElement {
 
   @property({
     type: Object,
     attribute: 'todo'
   })
-  private readonly todo: Todo;
+  private todo: Todo;
 
   private active: boolean;
 
   constructor() {
     // Always call super() first
     super();
-    this.todo = new Todo(0, "");
+    this.todo = new Todo(new TodoStore(), "new one");
     this.active = false;
   }
 
@@ -57,7 +59,7 @@ export class TodoItem extends LitElement {
 
         <paper-input id="${this._computeLabelId(this.todo.id)}"
                      class="flex"
-                     value="${this.todo.label}"
+                     value="${this.todo.task}"
                      no-label-float
                      @keypress="${this._checkConfirmation}"></paper-input>
 

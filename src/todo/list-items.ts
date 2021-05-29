@@ -1,31 +1,33 @@
-import {LitElement, html} from "lit";
+import {MobxLitElement} from "@adobe/lit-mobx";
+import {html} from "lit";
 import {customElement, property} from "lit/decorators.js";
-import {Todo} from "./todo.js";
-import TodoService from "./todo-service.js";
 
+import {Todo} from "./todo.js";
 import './todo-item.js'
+import {toJS} from "mobx";
 
 @customElement('list-items')
-export class ListItems extends LitElement {
+export class ListItems extends MobxLitElement {
 
   @property({
     type: Array,
-    attribute: 'todo-list'
+    attribute: 'todoList'
   })
-  private readonly todoList: Todo[];
-
-  private todoService: TodoService;
+  private todoList: Array<Todo>;
 
   constructor() {
     super();
-    // this.todoList = [];
-    this.todoService = new TodoService();
-    this.todoList = this.todoService.getTodoList();
-    console.log(this.todoList)
+    this.todoList = [];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
   }
 
   render() {
-    const list = this.todoList.map((todo: Todo) => html`
+    console.log('render b', this.todoList)
+
+    const list = toJS(this.todoList).map((todo: Todo) => html`
       <todo-item .todo="${todo}"></todo-item>
     `);
 

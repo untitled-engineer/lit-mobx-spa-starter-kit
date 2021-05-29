@@ -1,15 +1,69 @@
 // https://github.com/PolymerLabs/todo-list/tree/master/app/elements
+
+
+import {observable} from "mobx";
+import {TodoStore} from "./todo-store.js";
+
 export class Todo {
+  store: TodoStore
 
-  id: number;
+  id: number = 0;
 
-  label: string;
+  @observable
+  isComplete: boolean = false;
 
-  public isComplete: boolean;
+  @observable
+  task: string = "";
 
-  constructor(id: number, label: string, done?: boolean) {
-    this.id = id;
-    this.label = label;
-    this.isComplete = (done) || false;
+  constructor(store: TodoStore, task: string, isComplete = false) {
+    this.store = store;
+    this.task = task;
+    this.isComplete = isComplete;
+  }
+
+  toJS() {
+    return {
+      id: this.id,
+      task: this.task,
+      isComplete: this.isComplete
+    };
+  }
+
+  static fromJS(store: TodoStore, object: Todo) {
+    return new Todo(store, object.task, object.isComplete);
   }
 }
+
+/*
+export const Folder = types
+  .model({
+    id: types.identifier,
+    title: types.string,
+  })
+  .views(self => ({
+    get fullTitle() {
+      return self.title
+    }
+  }))
+
+export const Todo = types
+  .model({
+    id: types.identifier,
+    label: types.string,
+    isComplete: types.boolean,
+    folder: types.reference(Folder)
+  })
+  .actions(self => ({
+    setTitle(newName: string) {
+      // eslint-disable-next-line no-param-reassign
+      self.label = newName
+    },
+
+    toggleComplete() {
+      // eslint-disable-next-line no-param-reassign
+      self.isComplete = !self.isComplete
+    }
+  }))
+
+
+ */

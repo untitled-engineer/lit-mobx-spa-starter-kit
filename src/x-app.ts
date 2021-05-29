@@ -1,7 +1,7 @@
-// import "eagrouter";
-import "./router/index.js";
+import {MobxLitElement} from "@adobe/lit-mobx/src/lit-mobx";
 import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import {autorun} from "mobx";
 
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
 import '@polymer/app-layout/app-drawer/app-drawer.js';
@@ -15,8 +15,15 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/iron-icons/iron-icons.js';
 
 import "./home-page-element.js";
+
+import "./router/index.js";
 import type { Route } from "./router/index.js";
-import {MobxLitElement} from "@adobe/lit-mobx/src/lit-mobx";
+
+
+autorun(() => {
+  console.log(this)
+})
+
 
 @customElement("x-app")
 export class XApp extends MobxLitElement {
@@ -32,7 +39,7 @@ export class XApp extends MobxLitElement {
     { // For pages with lazy loading, use like this
       component: "<todo-page-element></todo-page-element>",
       path: "/todo",
-      bundle: () => import("./todo/todo-page-element.js"),
+      bundle: () => import("./todo/todo-page.js"),
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       guard: () => new Promise((resolve, _) => {
         // eslint-disable-next-line no-console
